@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'config/theme/app_colors.dart';
+
 class RouteTask extends StatelessWidget {
   const RouteTask({super.key});
 
@@ -8,8 +10,8 @@ class RouteTask extends StatelessWidget {
     return MaterialApp(
       title: 'Route Task',
       theme: ThemeData(
-          // primaryColor: AppColors.primaryColor,
-          ),
+        primaryColor: AppColors.primaryColor,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
