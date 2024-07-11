@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:route_task/features/products/domain/models/products_dto.dart';
 
 part 'products.g.dart';
 
@@ -56,6 +57,33 @@ class Products {
       _$ProductsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductsToJson(this);
+
+  ProductsDto toProductsDto() {
+    return ProductsDto(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+      price: price,
+      discountPercentage: discountPercentage,
+      rating: rating,
+      stock: stock,
+      tags: tags,
+      brand: brand,
+      sku: sku,
+      weight: weight,
+      dimensions: dimensions?.toDimensionsDto(),
+      warrantyInformation: warrantyInformation,
+      shippingInformation: shippingInformation,
+      availabilityStatus: availabilityStatus,
+      reviews: reviews?.map((review) => review.toReviewsDto()).toList(),
+      returnPolicy: returnPolicy,
+      minimumOrderQuantity: minimumOrderQuantity,
+      meta: meta?.toMetaDto(),
+      images: images,
+      thumbnail: thumbnail,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -74,6 +102,14 @@ class Dimensions {
       _$DimensionsFromJson(json);
 
   Map<String, dynamic> toJson() => _$DimensionsToJson(this);
+
+  DimensionsDto toDimensionsDto() {
+    return DimensionsDto(
+      depth: depth,
+      height: height,
+      width: width,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -96,6 +132,16 @@ class Reviews {
       _$ReviewsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReviewsToJson(this);
+
+  ReviewsDto toReviewsDto() {
+    return ReviewsDto(
+      comment: comment,
+      date: date,
+      rating: rating,
+      reviewerEmail: reviewerEmail,
+      reviewerName: reviewerName,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -115,4 +161,13 @@ class Meta {
   factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 
   Map<String, dynamic> toJson() => _$MetaToJson(this);
+
+  MetaDto toMetaDto() {
+    return MetaDto(
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      barcode: barcode,
+      qrCode: qrCode,
+    );
+  }
 }
