@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../features/products/ui/products_screen.dart';
 import 'routes_name.dart';
 
 class AppRouter {
   static Route onGenerate(RouteSettings settings) {
     switch (settings.name) {
-      // case RoutesName.productsScreen:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const ProductsScreen(),
-      //   );
+      case RoutesName.productsScreen:
+        return MaterialPageRoute(
+          builder: (context) => const ProductsScreen(),
+        );
 
       default:
         return MaterialPageRoute(builder: (context) => unDefinePageRoute());
