@@ -11,6 +11,7 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
+import '../../features/products/data/api/products_api_manager.dart' as _i5;
 import '../networking/api_consumer.dart' as _i3;
 import '../networking/dio_consumer.dart' as _i4;
 
@@ -26,6 +27,8 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     gh.factory<_i3.ApiConsumer>(() => _i4.DioConsumer());
+    gh.singleton<_i5.ProductsApiManager>(
+        () => _i5.ProductsApiManager(gh<_i3.ApiConsumer>()));
     return this;
   }
 }
