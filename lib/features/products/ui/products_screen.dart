@@ -62,8 +62,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     width: width * 0.2,
                   ),
                   SizedBox(height: height * 0.02),
-                  searchSection(
-                      context, width, viewModel.textEditingController),
+                  searchSection(context, width, viewModel),
                 ],
               ),
             ),
@@ -96,13 +95,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   Widget searchSection(
-      BuildContext context, double width, TextEditingController controller) {
+      BuildContext context, double width, ProductsViewModel viewModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 9,
-          child: CustomTextField(controller: controller),
+          child: CustomTextField(
+            controller: viewModel.textEditingController,
+            filterProducts: viewModel.addFilteredProductsToSearchedList,
+          ),
         ),
         SizedBox(width: width * 0.04),
         Expanded(

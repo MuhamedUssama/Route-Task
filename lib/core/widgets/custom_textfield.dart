@@ -5,12 +5,20 @@ import 'package:route_task/core/utils/images_path.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  const CustomTextField({super.key, required this.controller});
+  final Function filterProducts;
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.filterProducts,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      onChanged: (searchedProduct) {
+        filterProducts(searchedProduct);
+      },
       cursorColor: AppColors.primaryColor,
       style: TextStyles.searchTextStyle,
       decoration: InputDecoration(

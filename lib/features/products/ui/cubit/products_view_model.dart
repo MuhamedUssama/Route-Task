@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:route_task/features/products/domain/usecases/products_usecase.dart';
 
+import '../../domain/models/products_dto.dart';
 import 'products_states.dart';
 
 @injectable
@@ -15,6 +16,8 @@ class ProductsViewModel extends Cubit<ProductsStates> {
   static int limit = 30;
   final ScrollController scrollController = ScrollController();
 
+  List<ProductsDto?>? allProducts = [];
+  List<ProductsDto?>? searchedProducts = [];
   final TextEditingController textEditingController = TextEditingController();
 
   Future<void> getProducts() async {
@@ -24,7 +27,10 @@ class ProductsViewModel extends Cubit<ProductsStates> {
 
     response.fold(
       (failure) => emit(ProductsErrorState(failure.message)),
-      (products) => emit(ProductsSuccessState(products)),
+      (products) {
+        allProducts?.addAll(products ?? []);
+        emit(ProductsSuccessState(products));
+      },
     );
   }
 
@@ -37,9 +43,19 @@ class ProductsViewModel extends Cubit<ProductsStates> {
 
         response.fold(
           (failure) => emit(ProductsErrorState(failure.message)),
-          (products) => emit(PaginationProductsState(products)),
+          (products) {
+            allProducts?.addAll(products ?? []);
+            return emit(PaginationProductsState(products));
+          },
         );
       }
     }
+  }
+
+  void addFilteredProductsToSearchedList(String searchedProduct) {
+    searchedProducts = allProducts
+        ?.where((product) =>
+            product!.title!.toLowerCase().startsWith(searchedProduct))
+        .toList();
   }
 }
