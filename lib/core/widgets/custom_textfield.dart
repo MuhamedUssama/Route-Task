@@ -4,11 +4,13 @@ import 'package:route_task/config/theme/text_styles.dart';
 import 'package:route_task/core/utils/images_path.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key});
+  final TextEditingController controller;
+  const CustomTextField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       cursorColor: AppColors.primaryColor,
       style: TextStyles.searchTextStyle,
       decoration: InputDecoration(

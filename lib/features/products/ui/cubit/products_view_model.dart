@@ -15,6 +15,8 @@ class ProductsViewModel extends Cubit<ProductsStates> {
   static int limit = 30;
   final ScrollController scrollController = ScrollController();
 
+  final TextEditingController textEditingController = TextEditingController();
+
   Future<void> getProducts() async {
     emit(ProductsLoadingState());
 

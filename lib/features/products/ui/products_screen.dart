@@ -37,6 +37,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void dispose() {
     viewModel.scrollController.dispose();
+    viewModel.textEditingController.dispose();
     super.dispose();
   }
 
@@ -61,7 +62,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     width: width * 0.2,
                   ),
                   SizedBox(height: height * 0.02),
-                  searchSection(context, width),
+                  searchSection(
+                      context, width, viewModel.textEditingController),
                 ],
               ),
             ),
@@ -93,13 +95,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget searchSection(BuildContext context, double width) {
+  Widget searchSection(
+      BuildContext context, double width, TextEditingController controller) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Expanded(
+        Expanded(
           flex: 9,
-          child: CustomTextField(),
+          child: CustomTextField(controller: controller),
         ),
         SizedBox(width: width * 0.04),
         Expanded(
