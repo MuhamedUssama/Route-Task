@@ -35,14 +35,14 @@ class CustomCard extends StatelessWidget {
     }
   }
 
-  String truncateDescription(String title) {
-    List<String> words = title.split(' ');
-    if (words.length <= 3) {
-      return title;
-    } else {
-      return "${words.sublist(0, 3).join(' ')}..";
-    }
+  String truncateDescription(String description) {
+  List<String> words = description.split(RegExp(r'[\s-]+'));
+  if (words.length <= 3) {
+    return description;
+  } else {
+    return "${words.sublist(0, 3).join(' ')}..";
   }
+}
 
   @override
   Widget build(BuildContext context) {
