@@ -11,8 +11,9 @@ class ProductsUsecase {
   @factoryMethod
   ProductsUsecase(this.productsRepository);
 
-  Future<Either<ServerException, List<ProductsDto?>?>> invoke() async {
-    final response = await productsRepository.getProducts();
+  Future<Either<ServerException, List<ProductsDto?>?>> invoke(
+      int? limit) async {
+    final response = await productsRepository.getProducts(limit);
 
     return response.fold(
       (failure) => Left(ServerException(failure.message)),

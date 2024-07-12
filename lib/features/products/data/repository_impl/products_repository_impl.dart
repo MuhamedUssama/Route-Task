@@ -13,8 +13,9 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl(this.productsDataSource);
 
   @override
-  Future<Either<ServerException, List<ProductsDto?>?>> getProducts() async {
-    final productsResponse = await productsDataSource.getProducts();
+  Future<Either<ServerException, List<ProductsDto?>?>> getProducts(
+      int? limit) async {
+    final productsResponse = await productsDataSource.getProducts(limit);
 
     return productsResponse.fold(
       (failure) => Left(ServerException(failure.message)),

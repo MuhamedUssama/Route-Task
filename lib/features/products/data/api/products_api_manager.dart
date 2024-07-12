@@ -15,13 +15,16 @@ class ProductsApiManager {
   @factoryMethod
   ProductsApiManager(this.apiConsumer);
 
-  Future<Either<ServerException, ProductsResponse?>> getProducts() async {
+  Future<Either<ServerException, ProductsResponse?>> getProducts(
+      int? limit) async {
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());
 
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      final json = await apiConsumer.get(EndPoints.products);
+      final json = await apiConsumer.get(EndPoints.products, queryParameters: {
+        "limit": limit,
+      });
       ProductsResponse productsResponse = ProductsResponse.fromJson(json);
 
       if (productsResponse.total != 0) {

@@ -13,8 +13,9 @@ class ProductsDataSourceImpl implements ProductsDataSource {
   ProductsDataSourceImpl(this.apiManager);
 
   @override
-  Future<Either<ServerException, List<ProductsDto?>?>> getProducts() async {
-    final productsResponse = await apiManager.getProducts();
+  Future<Either<ServerException, List<ProductsDto?>?>> getProducts(
+      int? limit) async {
+    final productsResponse = await apiManager.getProducts(limit);
     return productsResponse.fold(
       (failure) => Left(ServerException(failure.message)),
       (response) => Right(
