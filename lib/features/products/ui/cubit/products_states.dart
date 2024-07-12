@@ -13,3 +13,8 @@ class ProductsSuccessState extends ProductsStates {
   List<ProductsDto?>? products;
   ProductsSuccessState(this.products);
 }
+
+class PaginationProductsState extends ProductsStates {
+  List<ProductsDto?>? products;
+  PaginationProductsState(this.products);
+}

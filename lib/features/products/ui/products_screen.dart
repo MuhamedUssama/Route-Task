@@ -11,14 +11,37 @@ import '../../../core/widgets/custom_textfield.dart';
 import '../../../core/widgets/loading_widget.dart';
 import 'cubit/products_states.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var viewModel = getIt.get<ProductsViewModel>();
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  ProductsViewModel viewModel = getIt.get<ProductsViewModel>();
+
+  @override
+  void initState() {
     viewModel.getProducts();
 
+    viewModel.scrollController.addListener(
+      () {
+        viewModel.paginationProducts();
+      },
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewModel.scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -48,6 +71,8 @@ class ProductsScreen extends StatelessWidget {
                 if (state is ProductsErrorState) {
                   return CustomErrorWidget(message: state.errorMessage);
                 } else if (state is ProductsSuccessState) {
+                  return productsSection(width, height, state.products);
+                } else if (state is PaginationProductsState) {
                   return productsSection(width, height, state.products);
                 } else {
                   return const Expanded(
@@ -91,6 +116,7 @@ class ProductsScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: GridView.builder(
+          controller: viewModel.scrollController,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 8,
