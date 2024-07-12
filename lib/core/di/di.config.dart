@@ -16,6 +16,10 @@ import '../../features/products/data/data_sources/products_data_source.dart'
     as _i6;
 import '../../features/products/data/data_sources/products_data_source_impl.dart'
     as _i7;
+import '../../features/products/data/repository_impl/products_repository_impl.dart'
+    as _i9;
+import '../../features/products/domain/repository/products_repository.dart'
+    as _i8;
 import '../networking/api_consumer.dart' as _i3;
 import '../networking/dio_consumer.dart' as _i4;
 
@@ -35,6 +39,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i5.ProductsApiManager(gh<_i3.ApiConsumer>()));
     gh.factory<_i6.ProductsDataSource>(
         () => _i7.ProductsDataSourceImpl(gh<_i5.ProductsApiManager>()));
+    gh.factory<_i8.ProductsRepository>(
+        () => _i9.ProductsRepositoryImpl(gh<_i6.ProductsDataSource>()));
     return this;
   }
 }
