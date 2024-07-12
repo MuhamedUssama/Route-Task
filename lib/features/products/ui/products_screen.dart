@@ -50,13 +50,7 @@ class ProductsScreen extends StatelessWidget {
         SizedBox(width: width * 0.04),
         Expanded(
           flex: 1,
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
+          child: Image.asset(IconsPath.shoppingCart),
         ),
       ],
     );

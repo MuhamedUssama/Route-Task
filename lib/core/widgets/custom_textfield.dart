@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:route_task/config/theme/text_styles.dart';
+import 'package:route_task/core/utils/images_path.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key});
@@ -11,10 +12,7 @@ class CustomTextField extends StatelessWidget {
         hintText: 'what do you search for?',
         hintStyle: TextStyles.textFieldHintText,
         focusColor: Theme.of(context).primaryColor,
-        prefixIcon: Icon(
-          Icons.search_rounded,
-          color: Theme.of(context).primaryColor,
-        ),
+        prefixIcon: Image.asset(IconsPath.search),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(26),
           borderSide: BorderSide(
