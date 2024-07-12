@@ -29,4 +29,10 @@ class TextStyles {
     decoration: TextDecoration.lineThrough,
     decorationColor: AppColors.primaryColor,
   );
+
+  static const TextStyle searchTextStyle = TextStyle(
+    color: AppColors.primaryColor,
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  );
 }
