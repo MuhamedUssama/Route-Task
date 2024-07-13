@@ -14,6 +14,7 @@ class ProductsViewModel extends Cubit<ProductsStates> {
   ProductsViewModel(this.usecase) : super(ProductsLoadingState());
 
   int limit = 30;
+  bool isPagination = false;
   final ScrollController scrollController = ScrollController();
 
   List<ProductsDto?>? allProducts = [];
@@ -21,8 +22,9 @@ class ProductsViewModel extends Cubit<ProductsStates> {
   final TextEditingController textEditingController = TextEditingController();
 
   Future<void> getProducts() async {
-    emit(ProductsLoadingState());
-
+    if (!isPagination) {
+      emit(ProductsLoadingState());
+    }
     final response = await usecase.invoke(limit);
 
     response.fold(
@@ -34,20 +36,13 @@ class ProductsViewModel extends Cubit<ProductsStates> {
     );
   }
 
-  Future<void> paginationProducts() async {
-    if (scrollController.position.atEdge) {
+  void onScroll() {
+    if (scrollController.position.atEdge &&
+        textEditingController.text.isEmpty) {
       if (scrollController.offset != 0) {
+        isPagination = true;
         limit += 10;
-
-        final response = await usecase.invoke(limit);
-
-        response.fold(
-          (failure) => emit(ProductsErrorState(failure.message)),
-          (products) {
-            allProducts = products;
-            return emit(PaginationProductsState(products));
-          },
-        );
+        getProducts();
       }
     }
   }

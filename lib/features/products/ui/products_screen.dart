@@ -23,21 +23,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   void initState() {
-    viewModel.getProducts();
-
-    viewModel.scrollController.addListener(
-      () {
-        viewModel.paginationProducts();
-      },
-    );
-
     super.initState();
+
+    viewModel.getProducts();
+    viewModel.scrollController.addListener(viewModel.onScroll);
   }
 
   @override
   void dispose() {
+    viewModel.scrollController.removeListener(viewModel.onScroll);
     viewModel.scrollController.dispose();
-    viewModel.scrollController.removeListener(viewModel.paginationProducts);
     viewModel.textEditingController.dispose();
     super.dispose();
   }
@@ -59,8 +54,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 if (state is ProductsErrorState) {
                   return CustomErrorWidget(message: state.errorMessage);
                 } else if (state is ProductsSuccessState) {
-                  return productsSection(width, height, state.products);
-                } else if (state is PaginationProductsState) {
                   return productsSection(width, height, state.products);
                 } else if (state is ProductsFilteringState) {
                   return productsSection(width, height, state.products);
