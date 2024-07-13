@@ -37,6 +37,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void dispose() {
     viewModel.scrollController.dispose();
+    viewModel.scrollController.removeListener(viewModel.paginationProducts);
     viewModel.textEditingController.dispose();
     super.dispose();
   }
@@ -51,21 +52,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    ImagesPath.logo,
-                    color: Theme.of(context).primaryColor,
-                    width: width * 0.2,
-                  ),
-                  SizedBox(height: height * 0.02),
-                  searchSection(context, width, viewModel),
-                ],
-              ),
-            ),
+            headerSection(width, height),
             BlocBuilder<ProductsViewModel, ProductsStates>(
               bloc: viewModel,
               builder: (context, state) {
@@ -75,21 +62,34 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   return productsSection(width, height, state.products);
                 } else if (state is PaginationProductsState) {
                   return productsSection(width, height, state.products);
+                } else if (state is ProductsFilteringState) {
+                  return productsSection(width, height, state.products);
                 } else {
-                  return const Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(child: LoadingWidget()),
-                      ],
-                    ),
-                  );
+                  return const LoadingWidget();
                 }
               },
             ),
             SizedBox(height: height * 0.02),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget headerSection(double width, double height) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            ImagesPath.logo,
+            color: Theme.of(context).primaryColor,
+            width: width * 0.2,
+          ),
+          SizedBox(height: height * 0.02),
+          searchSection(context, width, viewModel),
+        ],
       ),
     );
   }
@@ -103,7 +103,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           flex: 9,
           child: CustomTextField(
             controller: viewModel.textEditingController,
-            filterProducts: viewModel.addFilteredProductsToSearchedList,
+            filterProducts: viewModel.addFilteredProductsToFilteredList,
           ),
         ),
         SizedBox(width: width * 0.04),

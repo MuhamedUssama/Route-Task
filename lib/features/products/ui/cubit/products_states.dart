@@ -18,3 +18,8 @@ class PaginationProductsState extends ProductsStates {
   List<ProductsDto?>? products;
   PaginationProductsState(this.products);
 }
+
+class ProductsFilteringState extends ProductsStates {
+  List<ProductsDto?>? products;
+  ProductsFilteringState(this.products);
+}

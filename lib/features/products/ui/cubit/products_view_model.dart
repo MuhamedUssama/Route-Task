@@ -13,11 +13,11 @@ class ProductsViewModel extends Cubit<ProductsStates> {
   @factoryMethod
   ProductsViewModel(this.usecase) : super(ProductsLoadingState());
 
-  static int limit = 30;
+  int limit = 30;
   final ScrollController scrollController = ScrollController();
 
   List<ProductsDto?>? allProducts = [];
-  List<ProductsDto?>? searchedProducts = [];
+  List<ProductsDto?>? filteredProducts = [];
   final TextEditingController textEditingController = TextEditingController();
 
   Future<void> getProducts() async {
@@ -28,7 +28,7 @@ class ProductsViewModel extends Cubit<ProductsStates> {
     response.fold(
       (failure) => emit(ProductsErrorState(failure.message)),
       (products) {
-        allProducts?.addAll(products ?? []);
+        allProducts = products;
         emit(ProductsSuccessState(products));
       },
     );
@@ -44,7 +44,7 @@ class ProductsViewModel extends Cubit<ProductsStates> {
         response.fold(
           (failure) => emit(ProductsErrorState(failure.message)),
           (products) {
-            allProducts?.addAll(products ?? []);
+            allProducts = products;
             return emit(PaginationProductsState(products));
           },
         );
@@ -52,10 +52,12 @@ class ProductsViewModel extends Cubit<ProductsStates> {
     }
   }
 
-  void addFilteredProductsToSearchedList(String searchedProduct) {
-    searchedProducts = allProducts
+  void addFilteredProductsToFilteredList(String searchedProduct) {
+    filteredProducts = allProducts
         ?.where((product) =>
-            product!.title!.toLowerCase().startsWith(searchedProduct))
+            product!.title!.toLowerCase().contains(searchedProduct))
         .toList();
+
+    emit(ProductsFilteringState(filteredProducts));
   }
 }

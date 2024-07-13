@@ -16,8 +16,8 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      onChanged: (searchedProduct) {
-        filterProducts(searchedProduct);
+      onChanged: (product) {
+        filterProducts(product);
       },
       cursorColor: AppColors.primaryColor,
       style: TextStyles.searchTextStyle,
