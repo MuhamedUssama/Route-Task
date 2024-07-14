@@ -1,8 +1,11 @@
 # Route Task
 
 ## Description
+- This Flutter application showcases a diverse range of products for users to explore and browse. It provides an intuitive interface for viewing product details, with pagination and product filtering (searching) features.
 
-This project is a starting point for a Flutter application.
+## Goal
+- This project aims to create a user-friendly platform where users can seamlessly explore and interact with various products.
+
 
 A few resources to get you started if this is your first Flutter project:
 
