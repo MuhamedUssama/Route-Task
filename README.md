@@ -6,8 +6,11 @@
 ## Goal
 - This project aims to create a user-friendly platform where users can seamlessly explore and interact with various products.
 
+## Screenshots/Screen Records
+![allProductsScreen](https://github.com/user-attachments/assets/da9469da-4799-465e-8c52-3802a9984c64) | ![filterProducts](https://github.com/user-attachments/assets/05011622-470c-4a5e-b072-ab5b4ca96cc6)
 
-A few resources to get you started if this is your first Flutter project:
+
+
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
